@@ -39,13 +39,28 @@ e-commerce-automation-framework
 ├── src
 │   ├── main
 │   │   ├── java
-│   │   │   └── ...
+│   │   │   └── com.sam.automation.config
+│   │   │       └── ConfigReader.java
+│   │   │
 │   │   └── resources
 │   │       └── config.properties
 │   │
 │   └── test
 │       └── java
-│           └── ...
+│           └── com.sam.automation
+│               ├── base
+│               │   └── BaseTest.java
+│               │
+│               ├── driver
+│               │   └── DriverFactory.java
+│               │
+│               ├── pages
+│               │
+│               ├── tests
+│               │   ├── ConfigReaderTest.java
+│               │   └── GoogleTest.java
+│               │
+│               └── utils
 │
 ├── pom.xml
 └── .gitignore
