@@ -40,8 +40,9 @@ e-commerce-automation-framework
 │   ├── main
 │   │   ├── java
 │   │   │   └── com.sam.automation.config
+|   |   |       ├──driver
+|   |   |       |   └── DriverFactory.java
 │   │   │       └── ConfigReader.java
-│   │   │
 │   │   └── resources
 │   │       └── config.properties
 │   │
@@ -50,16 +51,11 @@ e-commerce-automation-framework
 │           └── com.sam.automation
 │               ├── base
 │               │   └── BaseTest.java
-│               │
-│               ├── driver
-│               │   └── DriverFactory.java
-│               │
 │               ├── pages
 │               │
 │               ├── tests
 │               │   ├── ConfigReaderTest.java
 │               │   └── GoogleTest.java
-│               │
 │               └── utils
 │
 ├── pom.xml
