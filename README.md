@@ -35,28 +35,37 @@ The framework follows a layered structure to improve maintainability and reusabi
 
 ```text
 e-commerce-automation-framework
+ECommerceAutomationFramework
 │
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   └── com.sam.automation.config
-|   |   |       ├──config
-|   |   |          └── ConfigReader.java
-|   |   |       ├──driver
-|   |   |          └── DriverFactory.java      
-│   │   └── resources
-│   │       └── config.properties
-│   │
-│   └── test
-│       └── java
-│           └── com.sam.automation
-│               ├── base
-│               │   └── BaseTest.java
-│               ├── pages
-│               ├── tests
-│               │   ├── ConfigReaderTest.java
-│               │   └── GoogleTest.java
-│               └── utils
-│
+├── .gitignore
 ├── pom.xml
-└── .gitignore
+│
+└── src
+    │
+    ├── main
+    │   ├── java
+    │   │   └── com.sam.automation
+    │   │       ├── config
+    │   │       │   └── ConfigReader.java
+    │   │       │
+    │   │       └── driver
+    │   │           └── DriverFactory.java
+    │   │
+    │   └── resources
+    │       └── config.properties
+    │
+    └── test
+        └── java
+            └── com.sam.automation
+                ├── base
+                │   └── BaseTest.java
+                │
+                ├── pages
+                │
+                ├── tests
+                │   ├── ConfigReaderTest.java
+                │   ├── DriverFactoryTest.java
+                │   ├── GoogleTest.java
+                │   └── BaseUrlTest.java
+                │
+                └── utils
