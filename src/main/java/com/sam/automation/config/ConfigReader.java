@@ -10,34 +10,26 @@ public class ConfigReader {
     private static final Properties properties = new Properties();
 
     static {
-        loadProperties();
+        try{
+            loadProperties();
+        } catch (IOException e){
+            throw new RuntimeException("Failed to load config.properties", e);
+        }
     }
 
-    private static void loadProperties() {
+    private static void loadProperties() throws IOException {
 
         try (InputStream input =
                      ConfigReader.class
                              .getClassLoader()
                              .getResourceAsStream("config.properties")) {
 
-            System.out.println("InputStream = " + input);
-
             if (input == null) {
                 throw new RuntimeException(
-                        "config.properties file not found in resources."
+                        "config.properties file not found."
                 );
             }
-
             properties.load(input);
-
-            System.out.println("Config file loaded successfully");
-
-        } catch (IOException e) {
-
-            throw new RuntimeException(
-                    "Failed to load config.properties.",
-                    e
-            );
         }
     }
 
@@ -45,5 +37,4 @@ public class ConfigReader {
 
         return properties.getProperty(key);
     }
-
 }
