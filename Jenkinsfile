@@ -7,6 +7,14 @@ pipeline {
         maven 'Maven3'
     }
 
+    parameters {
+        choice(
+            name: 'TEST_SUITE',
+            choices: ['ALL', 'SMOKE', 'REGRESSION'],
+            description: 'Select the test suite to execute'
+        )
+    }
+
     stages {
 
         stage('Checkout') {
@@ -22,12 +30,26 @@ pipeline {
         }
 
         stage('Smoke Tests') {
+            when {
+                expression {
+                    params.TEST_SUITE == 'ALL' ||
+                    params.TEST_SUITE == 'SMOKE'
+                }
+            }
+
             steps {
                 bat 'mvn test "-Dgroups=smoke"'
             }
         }
 
         stage('Regression Tests') {
+            when {
+                expression {
+                    params.TEST_SUITE == 'ALL' ||
+                    params.TEST_SUITE == 'REGRESSION'
+                }
+            }
+
             steps {
                 bat 'mvn test "-Dgroups=regression" "-DexcludedGroups=smoke"'
             }
@@ -38,7 +60,10 @@ pipeline {
 
         always {
 
-            junit 'target/surefire-reports/*.xml'
+            junit(
+                testResults: 'target/surefire-reports/*.xml',
+                allowEmptyResults: true
+            )
 
             allure([
                 includeProperties: false,
