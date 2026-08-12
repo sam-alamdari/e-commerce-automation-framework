@@ -8,10 +8,17 @@ pipeline {
     }
 
     parameters {
+
         choice(
             name: 'TEST_SUITE',
             choices: ['ALL', 'SMOKE', 'REGRESSION'],
             description: 'Select the test suite to execute'
+        )
+
+        choice(
+            name: 'BROWSER',
+            choices: ['chrome'],
+            description: 'Select the browser for test execution'
         )
     }
 
@@ -38,7 +45,7 @@ pipeline {
             }
 
             steps {
-                bat 'mvn test "-Dgroups=smoke"'
+                bat 'mvn test "-Dgroups=smoke" "-Dbrowser=%BROWSER%"'
             }
         }
 
@@ -51,7 +58,7 @@ pipeline {
             }
 
             steps {
-                bat 'mvn test "-Dgroups=regression" "-DexcludedGroups=smoke"'
+                bat 'mvn test "-Dgroups=regression" "-DexcludedGroups=smoke" "-Dbrowser=%BROWSER%"'
             }
         }
     }

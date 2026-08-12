@@ -1,6 +1,5 @@
 package com.sam.automation.config;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -39,7 +38,11 @@ public class ConfigReader {
 
     public static String getProperty(String key) {
 
-        String value = properties.getProperty(key);
+        String value = System.getProperty(key);
+
+        if (value == null || value.isBlank()) {
+            value = properties.getProperty(key);
+        }
 
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException(
@@ -64,6 +67,7 @@ public class ConfigReader {
             );
         }
     }
+
     public static boolean getBooleanProperty(String key) {
 
         String value = getProperty(key);
