@@ -8,28 +8,58 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.time.Duration;
 
 public class DriverFactory {
-    public static WebDriver driver;
 
-    public static void initializeDriver(){
+    private static WebDriver driver;
 
-       String browser = ConfigReader.getProperty("browser");
-       if (browser.equalsIgnoreCase("chrome")){
-           ChromeOptions options = new ChromeOptions();
-           String headless = ConfigReader.getProperty("headless");
-           if (Boolean.parseBoolean(headless)){
-               options.addArguments("--headless=new");
-           }
-        driver = new ChromeDriver(options);
+    public static WebDriver getDriver() {
+        return driver;
     }
-        String implicitWait = ConfigReader.getProperty("implicitWait");
 
-        driver.manage().timeouts().implicitlyWait(
-                Duration.ofSeconds(Long.parseLong(implicitWait))
-        );
+    public static void initializeDriver() {
+
+        if (driver != null) {
+            return;
+        }
+
+        String browser =
+                ConfigReader.getProperty("browser");
+
+        boolean headless =
+                ConfigReader.getBooleanProperty("headless");
+
+        switch (browser.toLowerCase()) {
+
+            case "chrome" -> {
+
+                ChromeOptions options =
+                        new ChromeOptions();
+
+                if (headless) {
+                    options.addArguments("--headless=new");
+                }
+
+                driver =
+                        new ChromeDriver(options);
+            }
+
+            default -> throw new IllegalArgumentException(
+                    "Unsupported browser: " + browser
+            );
+        }
+
+        long implicitWait =
+                ConfigReader.getLongProperty("implicitWait");
+
+        driver.manage()
+                .timeouts()
+                .implicitlyWait(
+                        Duration.ofSeconds(implicitWait)
+                );
     }
-    public static void quitDriver(){
 
-        if (driver != null){
+    public static void quitDriver() {
+
+        if (driver != null) {
             driver.quit();
             driver = null;
         }

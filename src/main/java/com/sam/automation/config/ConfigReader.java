@@ -10,10 +10,13 @@ public class ConfigReader {
     private static final Properties properties = new Properties();
 
     static {
-        try{
+        try {
             loadProperties();
-        } catch (IOException e){
-            throw new RuntimeException("Failed to load config.properties", e);
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                    "Failed to load config.properties",
+                    e
+            );
         }
     }
 
@@ -25,16 +28,55 @@ public class ConfigReader {
                              .getResourceAsStream("config.properties")) {
 
             if (input == null) {
-                throw new RuntimeException(
+                throw new IllegalStateException(
                         "config.properties file not found."
                 );
             }
+
             properties.load(input);
         }
     }
 
     public static String getProperty(String key) {
 
-        return properties.getProperty(key);
+        String value = properties.getProperty(key);
+
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Configuration property not found or empty: " + key
+            );
+        }
+
+        return value.trim();
+    }
+
+    public static long getLongProperty(String key) {
+
+        String value = getProperty(key);
+
+        try {
+            return Long.parseLong(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(
+                    "Configuration property must be a valid number: "
+                            + key + "=" + value,
+                    e
+            );
+        }
+    }
+    public static boolean getBooleanProperty(String key) {
+
+        String value = getProperty(key);
+
+        if (!value.equalsIgnoreCase("true")
+                && !value.equalsIgnoreCase("false")) {
+
+            throw new IllegalArgumentException(
+                    "Configuration property must be true or false: "
+                            + key + "=" + value
+            );
+        }
+
+        return Boolean.parseBoolean(value);
     }
 }

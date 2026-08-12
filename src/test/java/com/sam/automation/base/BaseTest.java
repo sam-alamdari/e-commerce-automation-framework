@@ -2,20 +2,33 @@ package com.sam.automation.base;
 
 import com.sam.automation.config.ConfigReader;
 import com.sam.automation.driver.DriverFactory;
+import com.sam.automation.listeners.TestListener;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 
+@Listeners(TestListener.class)
 public class BaseTest {
 
-    @BeforeMethod
-    public void setup(){
-        DriverFactory.initializeDriver();
-        String baseUrl = ConfigReader.getProperty("baseUrl");
-        DriverFactory.driver.get(baseUrl);
-    }
+    protected WebDriver driver;
 
-    @AfterMethod
-    public void tearDown(){
+    public WebDriver getDriver() {
+        return driver;
+    }
+    @BeforeMethod(alwaysRun = true)
+    public void setup() {
+
+        DriverFactory.initializeDriver();
+        driver = DriverFactory.getDriver();
+        String baseUrl =
+                ConfigReader.getProperty("baseUrl");
+
+        driver.get(baseUrl);
+    }
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() {
         DriverFactory.quitDriver();
+        driver = null;
     }
 }
