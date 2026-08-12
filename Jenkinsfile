@@ -20,6 +20,12 @@ pipeline {
             choices: ['chrome'],
             description: 'Select the browser for test execution'
         )
+
+        choice(
+            name: 'HEADLESS',
+            choices: ['true', 'false'],
+            description: 'Run browser in headless mode'
+        )
     }
 
     stages {
@@ -45,7 +51,7 @@ pipeline {
             }
 
             steps {
-                bat 'mvn test "-Dgroups=smoke" "-Dbrowser=%BROWSER%"'
+                bat 'mvn test "-Dgroups=smoke" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%"'
             }
         }
 
@@ -58,7 +64,7 @@ pipeline {
             }
 
             steps {
-                bat 'mvn test "-Dgroups=regression" "-DexcludedGroups=smoke" "-Dbrowser=%BROWSER%"'
+                bat 'mvn test "-Dgroups=regression" "-DexcludedGroups=smoke" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%"'
             }
         }
     }
