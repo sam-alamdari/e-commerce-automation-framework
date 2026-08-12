@@ -1,6 +1,7 @@
 package com.sam.automation.utils;
 
 import com.sam.automation.config.ConfigReader;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,6 +46,12 @@ public class WaitUtils {
     public boolean waitForInvisibility(By locator) {
         return wait.until(
                 ExpectedConditions.invisibilityOfElementLocated(locator)
+        );
+    }
+
+    public Alert waitForAlert() {
+        return wait.until(
+                ExpectedConditions.alertIsPresent()
         );
     }
 }

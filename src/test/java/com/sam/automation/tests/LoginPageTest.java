@@ -10,6 +10,7 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends BaseTest {
@@ -50,6 +51,46 @@ public class LoginPageTest extends BaseTest {
         Assert.assertTrue(
                 loginPage.isLoginSuccessful(),
                 "Login should be successful"
+        );
+    }
+
+    @DataProvider(name = "invalidLoginData")
+    public Object[][] invalidLoginData() {
+
+        return new Object[][]{
+                {TestData.TEST_USERNAME, "wrongPassword1", "Wrong password."},
+                {TestData.TEST_USERNAME, "wrongPassword2", "Wrong password."},
+                {TestData.TEST_USERNAME, "wrongPassword3", "Wrong password."}
+        };
+    }
+
+    @Epic("E-Commerce")
+    @Feature("Authentication")
+    @Story("Invalid user login")
+    @Severity(SeverityLevel.NORMAL)
+    @Test(
+            dataProvider = "invalidLoginData",
+            groups = {"regression"}
+    )
+    public void verifyInvalidLogin(
+            String username,
+            String password,
+            String expectedMessage) {
+
+        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = homePage.clickLogin();
+
+        loginPage.enterUsername(username);
+        loginPage.enterPassword(password);
+        loginPage.clickLoginButton();
+
+        String actualMessage =
+                loginPage.getLoginAlertMessage();
+
+        Assert.assertEquals(
+                actualMessage,
+                expectedMessage,
+                "Invalid login alert message is incorrect"
         );
     }
 }
