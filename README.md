@@ -24,6 +24,8 @@ The framework is designed to support automated functional and regression testing
 | Selenium WebDriver | Web UI automation |
 | TestNG | Test execution and assertions |
 | Maven | Build and dependency management |
+| Jenkins            | CI pipeline and automated test execution |
+| Allure Report      | Automated test reporting and visualization |
 | Page Object Model | Test design and maintainability |
 | Git | Version control |
 | GitHub | Source code management |
