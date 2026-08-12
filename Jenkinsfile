@@ -26,6 +26,12 @@ pipeline {
             choices: ['true', 'false'],
             description: 'Run browser in headless mode'
         )
+
+        string(
+            name: 'BASE_URL',
+            defaultValue: 'https://www.demoblaze.com',
+            description: 'Base URL for test execution'
+        )
     }
 
     stages {
@@ -51,7 +57,7 @@ pipeline {
             }
 
             steps {
-                bat 'mvn test "-Dgroups=smoke" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%"'
+                bat 'mvn test "-Dgroups=smoke" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%" "-DbaseUrl=%BASE_URL%"'
             }
         }
 
@@ -64,7 +70,7 @@ pipeline {
             }
 
             steps {
-                bat 'mvn test "-Dgroups=regression" "-DexcludedGroups=smoke" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%"'
+                bat 'mvn test "-Dgroups=regression" "-DexcludedGroups=smoke" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%" "-DbaseUrl=%BASE_URL%"'
             }
         }
     }
