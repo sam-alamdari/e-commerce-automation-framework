@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class ApiSmokeTest {
+public class ApiSmokeTest extends ApiBaseTest {
 
     @Epic("E-Commerce")
     @Feature("API Testing")
@@ -22,7 +22,6 @@ public class ApiSmokeTest {
     public void verifyProductDetails() {
 
         given()
-                .baseUri("https://dummyjson.com")
                 .when()
                 .get("/products/1")
                 .then()
@@ -41,7 +40,6 @@ public class ApiSmokeTest {
     public void verifyProductsList() {
 
         given()
-                .baseUri("https://dummyjson.com")
                 .when()
                 .get("/products")
                 .then()
@@ -59,7 +57,6 @@ public class ApiSmokeTest {
     public void verifyProductsLimit() {
 
         given()
-                .baseUri("https://dummyjson.com")
                 .queryParam("limit", 5)
                 .when()
                 .get("/products")

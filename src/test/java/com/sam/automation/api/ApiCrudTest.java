@@ -11,10 +11,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class ApiCrudTest {
-
-    private static final String BASE_URI =
-            "https://dummyjson.com";
+public class ApiCrudTest extends ApiBaseTest {
 
     @Epic("E-Commerce")
     @Feature("API Testing")
@@ -31,7 +28,6 @@ public class ApiCrudTest {
                 """;
 
         given()
-                .baseUri(BASE_URI)
                 .header("Content-Type", "application/json")
                 .body(requestBody)
                 .when()
@@ -63,7 +59,6 @@ public class ApiCrudTest {
                 """;
 
         given()
-                .baseUri(BASE_URI)
                 .header("Content-Type", "application/json")
                 .body(requestBody)
                 .when()
@@ -85,7 +80,6 @@ public class ApiCrudTest {
     public void verifyDeleteProduct() {
 
         given()
-                .baseUri(BASE_URI)
                 .when()
                 .delete("/products/1")
                 .then()
