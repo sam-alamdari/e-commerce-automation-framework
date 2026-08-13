@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class ApiSmokeTest {
@@ -18,7 +19,7 @@ public class ApiSmokeTest {
     @Story("Verify product details endpoint")
     @Severity(SeverityLevel.CRITICAL)
     @Test(groups = {"api", "smoke"})
-    public void verifyProductsEndpoint() {
+    public void verifyProductDetails() {
 
         given()
                 .baseUri("https://dummyjson.com")
@@ -30,5 +31,41 @@ public class ApiSmokeTest {
                 .body("title", notNullValue())
                 .body("price", notNullValue())
                 .body("category", notNullValue());
+    }
+
+    @Epic("E-Commerce")
+    @Feature("API Testing")
+    @Story("Verify products list endpoint")
+    @Severity(SeverityLevel.NORMAL)
+    @Test(groups = {"api", "regression"})
+    public void verifyProductsList() {
+
+        given()
+                .baseUri("https://dummyjson.com")
+                .when()
+                .get("/products")
+                .then()
+                .statusCode(200)
+                .body("products", notNullValue())
+                .body("products.size()", greaterThan(0))
+                .body("total", greaterThan(0));
+    }
+
+    @Epic("E-Commerce")
+    @Feature("API Testing")
+    @Story("Verify products limit query parameter")
+    @Severity(SeverityLevel.NORMAL)
+    @Test(groups = {"api", "regression"})
+    public void verifyProductsLimit() {
+
+        given()
+                .baseUri("https://dummyjson.com")
+                .queryParam("limit", 5)
+                .when()
+                .get("/products")
+                .then()
+                .statusCode(200)
+                .body("products.size()", equalTo(5))
+                .body("limit", equalTo(5));
     }
 }
