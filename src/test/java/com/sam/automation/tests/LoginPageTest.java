@@ -1,6 +1,7 @@
 package com.sam.automation.tests;
 
 import com.sam.automation.base.BaseTest;
+import com.sam.automation.data.LoginTestData;
 import com.sam.automation.data.TestData;
 import com.sam.automation.pages.HomePage;
 import com.sam.automation.pages.LoginPage;
@@ -10,7 +11,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends BaseTest {
@@ -54,22 +54,13 @@ public class LoginPageTest extends BaseTest {
         );
     }
 
-    @DataProvider(name = "invalidLoginData")
-    public Object[][] invalidLoginData() {
-
-        return new Object[][]{
-                {TestData.TEST_USERNAME, "wrongPassword1", "Wrong password."},
-                {TestData.TEST_USERNAME, "wrongPassword2", "Wrong password."},
-                {TestData.TEST_USERNAME, "wrongPassword3", "Wrong password."}
-        };
-    }
-
     @Epic("E-Commerce")
     @Feature("Authentication")
     @Story("Invalid user login")
     @Severity(SeverityLevel.NORMAL)
     @Test(
             dataProvider = "invalidLoginData",
+            dataProviderClass = LoginTestData.class,
             groups = {"regression"}
     )
     public void verifyInvalidLogin(
