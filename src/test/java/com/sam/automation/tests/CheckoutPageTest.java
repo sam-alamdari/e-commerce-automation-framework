@@ -1,7 +1,7 @@
 package com.sam.automation.tests;
 
 import com.sam.automation.base.BaseTest;
-import com.sam.automation.data.TestData;
+import com.sam.automation.data.CheckoutData;
 import com.sam.automation.pages.CartPage;
 import com.sam.automation.pages.CheckoutPage;
 import com.sam.automation.pages.OrderConfirmationPage;
@@ -38,12 +38,12 @@ public class CheckoutPageTest extends BaseTest {
         );
 
         checkoutPage.fillCheckoutForm(
-                TestData.CUSTOMER_NAME,
-                TestData.CUSTOMER_COUNTRY,
-                TestData.CUSTOMER_CITY,
-                TestData.CUSTOMER_CARD,
-                TestData.CUSTOMER_MONTH,
-                TestData.CUSTOMER_YEAR
+                CheckoutData.CUSTOMER_NAME,
+                CheckoutData.CUSTOMER_COUNTRY,
+                CheckoutData.CUSTOMER_CITY,
+                CheckoutData.CUSTOMER_CARD,
+                CheckoutData.CUSTOMER_MONTH,
+                CheckoutData.CUSTOMER_YEAR
         );
 
         OrderConfirmationPage confirmationPage =
@@ -65,7 +65,7 @@ public class CheckoutPageTest extends BaseTest {
                 confirmationPage.getOrderDetails()
                         .contains(
                                 "Name: "
-                                        + TestData.CUSTOMER_NAME
+                                        + CheckoutData.CUSTOMER_NAME
                         ),
                 "Customer name in order confirmation is incorrect"
         );
