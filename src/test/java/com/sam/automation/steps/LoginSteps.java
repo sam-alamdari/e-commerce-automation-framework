@@ -18,6 +18,7 @@ public class LoginSteps {
     private WebDriver driver;
     private HomePage homePage;
     private LoginPage loginPage;
+    private String actualLoginMessage;
 
     @Before
     public void setup() {
@@ -67,6 +68,18 @@ public class LoginSteps {
         );
     }
 
+    @When("the user enters a valid username and an invalid password")
+    public void theUserEntersValidUsernameAndInvalidPassword() {
+
+        loginPage.enterUsername(
+                TestData.TEST_USERNAME
+        );
+
+        loginPage.enterPassword(
+                "invalidPassword123"
+        );
+    }
+
     @When("the user clicks the login button")
     public void theUserClicksTheLoginButton() {
 
@@ -79,6 +92,19 @@ public class LoginSteps {
         Assert.assertTrue(
                 loginPage.isLoginSuccessful(),
                 "Login should be successful"
+        );
+    }
+
+    @Then("an invalid login message should be displayed")
+    public void anInvalidLoginMessageShouldBeDisplayed() {
+
+        actualLoginMessage =
+                loginPage.getLoginAlertMessage();
+
+        Assert.assertEquals(
+                actualLoginMessage,
+                "Wrong password.",
+                "Invalid login message should be displayed"
         );
     }
 

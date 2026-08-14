@@ -10,3 +10,10 @@ Feature: User Login
     And the user enters valid login credentials
     And the user clicks the login button
     Then the user should be logged in successfully
+
+  Scenario: Unsuccessful login with invalid password
+    Given the user is on the home page
+    When the user opens the login form
+    And the user enters a valid username and an invalid password
+    And the user clicks the login button
+    Then an invalid login message should be displayed
