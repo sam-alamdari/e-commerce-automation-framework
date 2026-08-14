@@ -1,42 +1,24 @@
 package com.sam.automation.database;
 
+import com.sam.automation.utils.DatabaseUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProductDatabaseTest {
 
-    private static final String DB_URL =
-            "jdbc:mysql://localhost:3306/ecommerce_test_db";
-
-    private static final String DB_USERNAME =
-            "automation_user";
-
     @Test(groups = {"database", "regression"})
     public void verifyProductData() {
-
-        String dbPassword =
-                System.getenv("ECOMMERCE_DB_PASSWORD");
-
-        Assert.assertNotNull(
-                dbPassword,
-                "ECOMMERCE_DB_PASSWORD environment variable must be set"
-        );
 
         String query =
                 "SELECT name, price, category FROM products WHERE id = ?";
 
         try (Connection connection =
-                     DriverManager.getConnection(
-                             DB_URL,
-                             DB_USERNAME,
-                             dbPassword
-                     );
+                     DatabaseUtils.getConnection();
 
              PreparedStatement statement =
                      connection.prepareStatement(query)) {
@@ -81,7 +63,8 @@ public class ProductDatabaseTest {
         } catch (SQLException e) {
 
             Assert.fail(
-                    "Database query failed: " + e.getMessage()
+                    "Database query failed: "
+                            + e.getMessage()
             );
         }
     }
@@ -89,23 +72,11 @@ public class ProductDatabaseTest {
     @Test(groups = {"database", "regression"})
     public void verifyProductCount() {
 
-        String dbPassword =
-                System.getenv("ECOMMERCE_DB_PASSWORD");
-
-        Assert.assertNotNull(
-                dbPassword,
-                "ECOMMERCE_DB_PASSWORD environment variable must be set"
-        );
-
         String query =
                 "SELECT COUNT(*) AS product_count FROM products";
 
         try (Connection connection =
-                     DriverManager.getConnection(
-                             DB_URL,
-                             DB_USERNAME,
-                             dbPassword
-                     );
+                     DatabaseUtils.getConnection();
 
              PreparedStatement statement =
                      connection.prepareStatement(query);
@@ -130,7 +101,8 @@ public class ProductDatabaseTest {
         } catch (SQLException e) {
 
             Assert.fail(
-                    "Database query failed: " + e.getMessage()
+                    "Database query failed: "
+                            + e.getMessage()
             );
         }
     }
