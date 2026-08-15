@@ -11,9 +11,15 @@ Feature: User Login
     And the user clicks the login button
     Then the user should be logged in successfully
 
-  Scenario: Unsuccessful login with invalid password
+  Scenario Outline: Unsuccessful login with invalid credentials
     Given the user is on the home page
     When the user opens the login form
-    And the user enters a valid username and an invalid password
+    And the user enters "<username>" and "<password>"
     And the user clicks the login button
-    Then an invalid login message should be displayed
+    Then the login error message should be "<message>"
+
+    Examples:
+      | username            | password           | message              |
+      | sam_automation_test | wrongPassword1     | Wrong password.      |
+      | sam_automation_test | wrongPassword2     | Wrong password.      |
+      | invalid_user_123    | invalidPassword123 | User does not exist. |
