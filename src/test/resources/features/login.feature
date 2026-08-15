@@ -3,7 +3,7 @@ Feature: User Login
   As a registered user
   I want to log in to the e-commerce application
   So that I can access my account
-
+  @smoke @regression
   Scenario: Successful login with valid credentials
     Given the user is on the home page
     When the user opens the login form
@@ -11,6 +11,7 @@ Feature: User Login
     And the user clicks the login button
     Then the user should be logged in successfully
 
+  @regression
   Scenario Outline: Unsuccessful login with invalid credentials
     Given the user is on the home page
     When the user opens the login form
