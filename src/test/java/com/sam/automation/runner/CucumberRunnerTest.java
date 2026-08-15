@@ -7,7 +7,9 @@ import io.cucumber.testng.CucumberOptions;
         features = "src/test/resources/features",
         glue = "com.sam.automation.steps",
         plugin = {
-                "pretty"
+                "pretty",
+                "html:target/cucumber-reports/cucumber.html",
+                "json:target/cucumber-reports/cucumber.json"
         }
 )
 public class CucumberRunnerTest
