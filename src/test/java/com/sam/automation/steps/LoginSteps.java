@@ -1,12 +1,9 @@
 package com.sam.automation.steps;
 
-import com.sam.automation.config.ConfigReader;
 import com.sam.automation.data.TestData;
 import com.sam.automation.driver.DriverFactory;
 import com.sam.automation.pages.HomePage;
 import com.sam.automation.pages.LoginPage;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -19,23 +16,14 @@ public class LoginSteps {
     private HomePage homePage;
     private LoginPage loginPage;
 
-    @Before
-    public void setup() {
+    @Given("the user is on the home page")
+    public void theUserIsOnTheHomePage() {
 
-        DriverFactory.initializeDriver();
-
-        driver = DriverFactory.getDriver();
-
-        driver.get(
-                ConfigReader.getProperty("baseUrl")
-        );
+        driver =
+                DriverFactory.getDriver();
 
         homePage =
                 new HomePage(driver);
-    }
-
-    @Given("the user is on the home page")
-    public void theUserIsOnTheHomePage() {
 
         Assert.assertNotNull(
                 driver,
@@ -103,12 +91,6 @@ public class LoginSteps {
                 expectedMessage,
                 "Login error message is incorrect"
         );
-    }
-
-    @After
-    public void tearDown() {
-
-        DriverFactory.quitDriver();
     }
 }
 
