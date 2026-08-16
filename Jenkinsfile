@@ -7,6 +7,10 @@ pipeline {
         maven 'Maven3'
     }
 
+    environment {
+        ECOMMERCE_DB_PASSWORD = credentials('ecommerce-db-password')
+    }
+
     parameters {
 
         choice(
@@ -48,29 +52,39 @@ pipeline {
             }
         }
 
+        stage('All Tests') {
+            when {
+                expression {
+                    params.TEST_SUITE == 'ALL'
+                }
+            }
+
+            steps {
+                bat 'mvn test "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%" "-DbaseUrl=%BASE_URL%"'
+            }
+        }
+
         stage('Smoke Tests') {
             when {
                 expression {
-                    params.TEST_SUITE == 'ALL' ||
                     params.TEST_SUITE == 'SMOKE'
                 }
             }
 
             steps {
-                bat 'mvn test "-Dgroups=smoke" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%" "-DbaseUrl=%BASE_URL%"'
+                bat 'mvn test "-Dsurefire.suiteXmlFiles=src/test/resources/suites/smoke-suite.xml" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%" "-DbaseUrl=%BASE_URL%"'
             }
         }
 
         stage('Regression Tests') {
             when {
                 expression {
-                    params.TEST_SUITE == 'ALL' ||
                     params.TEST_SUITE == 'REGRESSION'
                 }
             }
 
             steps {
-                bat 'mvn test "-Dgroups=regression" "-DexcludedGroups=smoke" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%" "-DbaseUrl=%BASE_URL%"'
+                bat 'mvn test "-Dsurefire.suiteXmlFiles=src/test/resources/suites/regression-suite.xml" "-Dbrowser=%BROWSER%" "-Dheadless=%HEADLESS%" "-DbaseUrl=%BASE_URL%"'
             }
         }
     }
