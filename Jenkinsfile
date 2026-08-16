@@ -102,6 +102,11 @@ pipeline {
                 allowEmptyResults: true
             )
 
+            archiveArtifacts(
+                artifacts: 'target/cucumber-reports/**, target/screenshots/**',
+                allowEmptyArchive: true
+            )
+
             allure([
                 includeProperties: false,
                 jdk: '',
