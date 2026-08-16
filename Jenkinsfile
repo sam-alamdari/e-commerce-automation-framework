@@ -13,6 +13,7 @@ pipeline {
 
     environment {
         ECOMMERCE_DB_PASSWORD = credentials('ecommerce-db-password')
+        ECOMMERCE_TEST_PASSWORD = credentials('ecommerce-test-password')
     }
 
     parameters {
