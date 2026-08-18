@@ -1,5 +1,7 @@
 # E-Commerce Test Automation Framework
 
+[![E-Commerce Automation CI](https://github.com/sam-alamdari/e-commerce-automation-framework/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/sam-alamdari/e-commerce-automation-framework/actions/workflows/ci.yml)
+
 A Java-based test automation framework for an e-commerce application, covering UI, API, database, and BDD testing.
 
 The project is built with Selenium WebDriver, TestNG, REST Assured, Cucumber, Maven, MySQL, Jenkins, GitHub Actions, and Allure, using the Page Object Model (POM) design pattern.
