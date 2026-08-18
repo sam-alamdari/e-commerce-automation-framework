@@ -400,7 +400,7 @@ Screenshots are:
 
 ## Test Results
 
-The current complete Maven test execution:
+Latest documented full Maven test execution:
 
 ```text
 Tests run: 29
